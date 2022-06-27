@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sample_chart/pie_chart/samples/indicator.dart';
 
 class PieChartSample2 extends StatefulWidget {
   const PieChartSample2({Key? key}) : super(key: key);
@@ -17,35 +18,81 @@ class _PieChartSample2State extends State<PieChartSample2> {
       aspectRatio: 1.3,
       child: Card(
         color: Colors.white,
-        child: Row(children: [
-          const SizedBox(
-            height: 18,
-          ),
-          Expanded(
-              child: AspectRatio(
-            aspectRatio: 1,
-            child: PieChart(
-              PieChartData(
-                  sections: showingSections(),
-                  borderData: FlBorderData(show: false),
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 40,
-                  pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                    setState(() {
-                      if (!event.isInterestedForInteractions ||
-                          pieTouchResponse == null ||
-                          pieTouchResponse.touchedSection == null) {
-                        touchedIndex = -1;
-                        return;
-                      }
-                      touchedIndex =
-                          pieTouchResponse.touchedSection!.touchedSectionIndex;
-                    });
-                  })),
+        child: Row(
+          children: [
+            const SizedBox(
+              height: 18,
             ),
-          ))
-        ]),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: PieChart(
+                  PieChartData(
+                    sections: showingSections(),
+                    borderData: FlBorderData(show: false),
+                    sectionsSpace: 0,
+                    centerSpaceRadius: 40,
+                    pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      setState(() {
+                        if (!event.isInterestedForInteractions ||
+                            pieTouchResponse == null ||
+                            pieTouchResponse.touchedSection == null) {
+                          touchedIndex = -1;
+                          return;
+                        }
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!.touchedSectionIndex;
+                      });
+                    }),
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Indicator(
+                  color: Color(0xff0293ee),
+                  text: 'First',
+                  isSquare: true,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Indicator(
+                  color: Color(0xfff8b250),
+                  text: 'Second',
+                  isSquare: true,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Indicator(
+                  color: Color(0xff845bef),
+                  text: 'Third',
+                  isSquare: true,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Indicator(
+                  color: Color(0xff13d38e),
+                  text: 'Fourth',
+                  isSquare: true,
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -96,9 +143,10 @@ class _PieChartSample2State extends State<PieChartSample2> {
             title: '15%',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xffffffff),
+            ),
           );
         default:
           throw Error();
